@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 
+#define PATH_SEPARATOR ':'
+
 struct path
 {
 
@@ -20,7 +22,7 @@ public:
     }
 
 public:
-    const std::string& get_path_to(const std::string& command)
+    const std::string& get_path_to(const std::string& command) const
     {
         static const std::string empty;
 
@@ -36,12 +38,10 @@ public:
 private:
     void parse(const std::string& path)
     {
-        const char separator = ':';
-
         std::stringstream ss(path);
         std::string directory_path;
 
-        while (std::getline(ss, directory_path, separator))
+        while (std::getline(ss, directory_path, PATH_SEPARATOR))
         {
             if (directory_path.empty())
                 continue;
@@ -52,9 +52,9 @@ private:
                 !std::filesystem::is_directory(directory))
                 continue;
 
-            for (const auto& entry : std::filesystem::directory_iterator(directory))
+            for (const auto& entry: std::filesystem::directory_iterator(directory))
             {
-                if(is_executable_file(entry))
+                if (is_executable_file(entry))
                 {
                     std::string filename = entry.path().filename().string();
                     std::string full_path = entry.path().string();

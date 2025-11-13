@@ -3,12 +3,12 @@
 #include "path.h"
 #include "prompt.h"
 #include "io_handler.h"
+#include "environment.h"
 #include "special_prompts.h"
 
 int main()
 {
-    path* environment_path =
-            new path(std::getenv("PATH"));
+    const path* const env_path = environment::get_path();
 
     std::string input;
     while (true)
@@ -21,7 +21,7 @@ int main()
         prompt prompt(input);
 
         const std::string& command = prompt.get_command();
-        const std::string& command_path = environment_path->get_path_to(command);
+        const std::string& command_path = env_path->get_path_to(command);
         const std::string& args = prompt.get_args();
 
         if (!command_path.empty())

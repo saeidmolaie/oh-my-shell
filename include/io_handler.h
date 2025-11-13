@@ -12,5 +12,9 @@ public:
 
 public:
     static std::string read();
+    static void write(const std::string& output);
+
+private:
+    static void write_shell_prompt();
 
 };
