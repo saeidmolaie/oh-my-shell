@@ -7,7 +7,8 @@
 
 int main()
 {
-    path path(std::getenv("PATH"));
+    path* environment_path =
+            new path(std::getenv("PATH"));
 
     std::string input;
     while (true)
@@ -20,7 +21,7 @@ int main()
         prompt prompt(input);
 
         const std::string& command = prompt.get_command();
-        const std::string& command_path = path.get_path_to(command);
+        const std::string& command_path = environment_path->get_path_to(command);
         const std::string& args = prompt.get_args();
 
         if (!command_path.empty())

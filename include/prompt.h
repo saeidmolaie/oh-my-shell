@@ -29,7 +29,7 @@ public:
 private:
     void parse(const std::string& input)
     {
-        std::string buffer{};
+        std::string buffer;
         bool first_space = true;
 
         for (int i = 0; i < input.length(); i++)
