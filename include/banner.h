@@ -31,4 +31,3 @@ void print_banner()
 
     io_handler::move_to_next_line();
 }
-        io_handler::write_line(line);
