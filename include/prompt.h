@@ -5,48 +5,54 @@
 struct prompt
 {
 
-private:
-    std::string m_command;
-    std::string m_args;
+	private:
+		std::string m_command;
+		std::string m_args;
 
-public:
-    explicit prompt(const std::string& input)
-    {
-        parse(input);
-    }
+	public:
+		explicit prompt(const std::string& input)
+		{
+			parse(input);
+		}
 
-public:
-    const std::string& get_command()
-    {
-        return m_command;
-    }
+	public:
+		const std::string& get_command() const
+		{
+			return m_command;
+		}
 
-    const std::string& get_args()
-    {
-        return m_args;
-    }
+		const std::string& get_args() const
+		{
+			return m_args;
+		}
 
-private:
-    void parse(const std::string& input)
-    {
-        std::string buffer;
-        bool first_space = true;
+	private:
+		void parse(const std::string& input)
+		{
+			std::string buffer;
+			bool command_parsed = false;
 
-        for (int i = 0; i < input.length(); i++)
-        {
-            const char& character = input.at(i);
+			for (int i = 0; i < input.length(); i++)
+			{
+				const char& character = input.at(i);
 
-            if (first_space && std::isspace(character))
-            {
-                first_space = false;
-                m_command = std::move(buffer);
+				if (!command_parsed && std::isspace(character))
+				{
+					command_parsed = true;
+					m_command = std::move(buffer);
 
-                continue;
-            }
+					continue;
+				}
 
-            buffer += character;
-        }
+				buffer += character;
+			}
 
-        m_args = std::move(buffer);
-    }
+			if (!command_parsed)
+			{
+				m_command = std::move(buffer);
+				return;
+			}
+
+			m_args = std::move(buffer);
+		}
 };

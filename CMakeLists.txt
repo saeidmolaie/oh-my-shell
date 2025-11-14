@@ -12,11 +12,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 add_executable(${PROJECT_NAME}
         src/ohmyshell.cpp
-        src/io_handler.cpp
-        src/environment.cpp
+        src/environment/environment.cpp
+        src/io/io_handler.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
         PRIVATE
         ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/include/environment
+        ${PROJECT_SOURCE_DIR}/include/io
 )

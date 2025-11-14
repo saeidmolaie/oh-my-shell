@@ -1,43 +1,47 @@
 #include <string>
 
 #include "banner.h"
+#include "environment.h"
+#include "builtin_prompts.h"
 #include "path.h"
 #include "prompt.h"
 #include "io_handler.h"
-#include "environment.h"
-#include "special_prompts.h"
 
 int main()
 {
-    print_banner();
+	print_banner();
 
-    const path* const env_path = environment::get_path();
+	const path* const env_path = environment::get_path();
 
-    std::string input;
-    while (true)
-    {
-        input = io_handler::read();
+	std::string input;
+	while (true)
+	{
+		input = io_handler::read();
 
-        if (input == EXIT_PROMPT)
-            break;
+		if (input == EXIT_PROMPT)
+			break;
 
-        prompt prompt(input);
+		prompt prompt(input);
 
-        const std::string& command = prompt.get_command();
-        const std::string& command_path = env_path->get_path_to(command);
-        const std::string& args = prompt.get_args();
+		// If the prompt is a built-in command, process it and continue the loop.
+		if (process_builtin_prompt(prompt))
+			continue;
 
-        if (!command_path.empty())
-        {
-            std::string full_command;
+		const std::string& command = prompt.get_command();
+		const std::string& command_path = env_path->get_path_to(command);
+		const std::string& args = prompt.get_args();
 
-            full_command += command_path;
-            full_command += " ";
-            full_command += args;
+		if (!command_path.empty())
+		{
+			std::string full_command;
 
-            std::system(full_command.c_str());
-        }
-    }
+			full_command += command_path;
+			full_command += " ";
+			full_command += args;
 
-    return 0;
+			std::system(full_command.c_str());
+		}
+	}
+
+	return 0;
 }
