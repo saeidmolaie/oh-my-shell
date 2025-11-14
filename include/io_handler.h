@@ -13,6 +13,8 @@ public:
 public:
     static std::string read();
     static void write(const std::string& output);
+    static void write_line(const std::string& output);
+    static void move_to_next_line();
 
 private:
     static void write_shell_prompt();

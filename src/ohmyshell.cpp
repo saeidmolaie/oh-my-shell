@@ -1,5 +1,6 @@
 #include <string>
 
+#include "banner.h"
 #include "path.h"
 #include "prompt.h"
 #include "io_handler.h"
@@ -8,6 +9,8 @@
 
 int main()
 {
+    print_banner();
+
     const path* const env_path = environment::get_path();
 
     std::string input;
