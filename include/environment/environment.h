@@ -4,6 +4,8 @@
 
 #include "path.h"
 
+#define HOME_DIRECTORY_SYMBOL "~"
+
 class environment
 {
 

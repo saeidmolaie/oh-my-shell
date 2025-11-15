@@ -7,8 +7,6 @@
 
 #include "environment/environment.h"
 
-#define HOME_DIRECTORY_SYMBOL "~"
-
 const path* const environment::get_path()
 {
 	static path* env_path = nullptr;

@@ -11,18 +11,36 @@
 #define CHANGE_DIRECTORY_PROMPT "cd"
 #define EXIT_PROMPT "exit"
 
-void handle_exit_prompt([[maybe_unused]] const prompt& prompt)
+static void handle_exit_prompt([[maybe_unused]] const prompt& prompt)
 {
 	exit(0);
 }
 
-void handle_change_directory(const prompt& prompt)
+static void handle_change_directory(const prompt& prompt)
 {
-	const auto& args = prompt.get_args();
+	const std::string& args = prompt.get_args();
+	const std::string& home_directory = environment::get_home_directory();
 
 	if (args.empty())
 	{
-		chdir(environment::get_home_directory().c_str());
+		if (chdir(home_directory.c_str()) != 0)
+		{
+			perror(CHANGE_DIRECTORY_PROMPT);
+		}
+
+		return;
+	}
+
+	std::string path = args;
+
+	if (path == HOME_DIRECTORY_SYMBOL)
+	{
+		path = home_directory;
+	}
+
+	if (chdir(path.c_str()) != 0)
+	{
+		perror(CHANGE_DIRECTORY_PROMPT);
 	}
 }
 
