@@ -18,6 +18,9 @@ int main()
 	{
 		input = io_handler::read();
 
+		if (input.empty())
+			continue;
+
 		if (input == EXIT_PROMPT)
 			break;
 
@@ -40,7 +43,14 @@ int main()
 			full_command += args;
 
 			std::system(full_command.c_str());
+
+			continue;
 		}
+
+		std::string error_message =
+				"command not found : " + command;
+
+		io_handler::write_line(color::GRUVBOX_BRIGHT_RED + error_message);
 	}
 
 	return 0;

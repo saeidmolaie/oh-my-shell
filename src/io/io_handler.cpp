@@ -2,6 +2,7 @@
 
 #include "environment/environment.h"
 #include "io/io_handler.h"
+#include "color.h"
 
 #define NEW_LINE "\n"
 #define PROMPT_PREFIX " at "
@@ -35,10 +36,13 @@ void io_handler::move_to_next_line()
 void io_handler::write_shell_prompt()
 {
 	std::string prompt =
+			color::GRUVBOX_BRIGHT_YELLOW +
 			environment::get_current_user() +
+			color::GRUVBOX_BRIGHT_CYAN +
 			PROMPT_PREFIX +
 			environment::get_current_working_directory() +
-			ARROW;
+			ARROW +
+			color::GRUVBOX_BRIGHT_YELLOW;
 
 	write(prompt);
 }
