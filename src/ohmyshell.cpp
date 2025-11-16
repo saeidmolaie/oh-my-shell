@@ -7,9 +7,15 @@
 #include "prompt.h"
 #include "io_handler.h"
 
+static bool banner_printed = false;
+
 int main()
 {
-	print_banner();
+	if (!banner_printed)
+	{
+		print_banner();
+		banner_printed = true;
+	}
 
 	const path* const env_path = environment::get_path();
 

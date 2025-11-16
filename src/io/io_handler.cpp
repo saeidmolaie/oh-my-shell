@@ -13,8 +13,11 @@ std::string io_handler::read()
 	write_shell_prompt();
 
 	std::string input;
-	getline(std::cin, input);
 
+	getline(std::cin, input);
+	write(color::RESET);
+
+	std::cout.flush();
 	return input;
 }
 
